@@ -1,0 +1,1 @@
+# Hits the entire application, given a few events
