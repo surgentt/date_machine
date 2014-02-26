@@ -1,6 +1,4 @@
-ENV["PLAYLISTER_ENV"] = "test"
-
-require_relative '../config/environment'
+require_relative '../spec_helper'
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
@@ -12,5 +10,12 @@ RSpec.configure do |config|
 
   config.before do
     run_rake_task('db:migrate')
+  end
+end
+
+def run_rake_task(task)
+  RAKE_APP[task].invoke
+  if task == 'db:migrate'
+    RAKE_APP[task].reenable
   end
 end
