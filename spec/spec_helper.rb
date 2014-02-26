@@ -11,13 +11,14 @@ RSpec.configure do |config|
   config.order = 'default'
 
   config.before do
+    run_rake_task('db:reset')
     run_rake_task('db:migrate')
   end
 end
 
 def run_rake_task(task)
   RAKE_APP[task].invoke
-  if task == 'db:migrate'
+  if task == 'db:migrate' || task == 'db:reset'
     RAKE_APP[task].reenable
   end
 end

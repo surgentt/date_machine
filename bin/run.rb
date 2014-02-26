@@ -7,6 +7,9 @@ ActiveRecord::Base.establish_connection(
   :database => 'db/profiles-dev.db')
 
 session = Capybara::Session.new(:selenium)
-profile = Profile.new(session)
+interact_session = OkcupidDriver.new(session)
 
-profile.login
+interact_session.login
+
+interact_session.quickmatch_like_people
+interact_session.add_liked_to_profile_array

@@ -1,7 +1,6 @@
 class Profile < ActiveRecord::Base
 
-  #validation not already exists - Test
-  
-  #profile.save given by Active Record
+  #ensure that the same user isn't getting saved twice
+  validates_uniqueness_of :username
 
 end
