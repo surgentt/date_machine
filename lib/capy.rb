@@ -26,6 +26,7 @@ class Okcupid
   def like_people
     session.visit 'http://www.okcupid.com/quickmatch'
     quick_match_doc = Nokogiri::HTML(session.html)
+    binding.pry
     percentage = quick_match_doc.search("span.match strong.percent").text.gsub("%", "").to_i
 
     if percentage > 75
