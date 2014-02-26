@@ -31,7 +31,7 @@ class Okcupid
   def senders
     session.visit "http://www.okcupid.com/messages"
     all_messages = Nokogiri::HTML(session.html)
-    senders_arr = inbox.css("a.open span.subject").collect { |i| i.text }
+    senders_arr = all_messages.css("a.open span.subject").collect { |i| i.text }
   end
 
   def inbox
