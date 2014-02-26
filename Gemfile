@@ -8,3 +8,4 @@ gem "activerecord"
 gem "sqlite3"
 gem "rspec"
 gem "pry"
+gem 'rake'

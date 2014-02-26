@@ -1,12 +1,11 @@
 class OkcupidDriver
 
-  attr_accessor :profiles, :profile #Profiles are people that I like
+  attr_accessor :profiles, :profile
   attr_reader :session
-  #profiles are profiles of other users I want to interact with
 
   def initialize(session)
     @session = session
-    @profiles = [] # move to database
+    @profiles = []
   end
 
   def login    
@@ -27,7 +26,6 @@ class OkcupidDriver
     percentage = quick_match_doc.search("span.match strong.percent").text.gsub("%", "").to_i
 
     if percentage > 75
-      binding.pry
       sleep rand(1..3)
       session.click_link "5 star rating"
     else
