@@ -45,6 +45,21 @@ class Okcupid
     end
   end
 
+  def message_content(arr_index)
+    nokogiri_doc(message_urls[arr_index][1..-1]).css(".message_body").text
+  end
+
+  def message_response(arr_i_or_name, response)
+    arr_i_or_name = sender_finder(arr_i_or_name) unless arr_i_or_name.is_a? Integer
+    session.visit("http://www.okcupid.com/#{message_urls[arr_i_or_name][1..-1]}")
+    session.fill_in('message_text', :with => "#{response}")
+    session.click_button("#send") # DEBUG - cannot assign ID of button
+  end
+
+  def sender_finder(sender)
+    senders.index(sender)
+  end
+
 
   #def inbox # make inbox class
   #   session.visit "http://www.okcupid.com/messages"
@@ -74,6 +89,9 @@ profile = Okcupid.new(session)
 profile.login
 puts "SENDERS: #{profile.senders.size}"
 puts "MESSAGE URLS #{profile.message_urls.size}"
+him = profile.sender_finder("mob_fleet")
+puts "#{profile.senders[him]} wrote #{profile.message_content(him)}"
+profile.message_response(him, "Hiiiii how are you?")
 
 binding.pry
 
