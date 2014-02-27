@@ -18,6 +18,7 @@ class Okcupid
   def nokogiri_doc(url)
     session.visit "http://www.okcupid.com/#{url}"
     doc = Nokogiri::HTML(session.html)
+    # binding.pry
     doc
   end
 
@@ -39,7 +40,7 @@ class Okcupid
   end
 
   def message_urls
-    nokogiri_doc("messages").css(".thread.message.readMessage a.open").collect do |link|
+    nokogiri_doc("messages").css(".thread.message a.open").collect do |link|
       link.attribute('href').value
     end
   end
@@ -71,8 +72,8 @@ end
 session = Capybara::Session.new(:selenium)
 profile = Okcupid.new(session)
 profile.login
-puts "SENDERS: #{profile.senders}"
-puts "MESAAGE URLS #{profile.message_urls}"
+puts "SENDERS: #{profile.senders.size}"
+puts "MESSAGE URLS #{profile.message_urls.size}"
 
 binding.pry
 
