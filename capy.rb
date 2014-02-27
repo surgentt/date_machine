@@ -15,6 +15,12 @@ class Okcupid
     @name_array = [] # move to database
   end
 
+  def nokogiri_doc(url)
+    session.visit "http://www.okcupid.com/#{url}"
+    doc = Nokogiri::HTML(session.html)
+    doc
+  end
+
   def login    
     session.visit "http://www.okcupid.com/home"
     session.fill_in "user", :with => "FlambeToe"
