@@ -1,6 +1,6 @@
 class OkcupidDriver
 
-  attr_accessor :profiles, :profile
+  attr_accessor :profiles, :profile, :unmessaged_profiles, :unmessaged_arr, :unmessaged_profile
   attr_reader :session
 
   def initialize(session)
@@ -35,7 +35,7 @@ class OkcupidDriver
   end
 
   def save_profile
-    profile = Profile.create(:username => profile)
+    profile = Profile.create(:username => profile, :messaged => 0)
   end
 
   def add_liked_to_profile_array
@@ -48,27 +48,27 @@ class OkcupidDriver
 
   def save_profiles_to_db
     profiles.each do |username|
-      profile = Profile.create(:username => username)
+      profile = Profile.create(:username => username, :messaged => 0)
     end
   end
 
-  #PUll people people out of db and save
+  def get_unmessaged_profiles_from_db
+    self.unmessaged_profiles = Profile.where("messaged = 0").limit(5)
+  end
 
   def message
-    @name_array.each do |username|
+    self.unmessaged_profiles.each do |unmessaged_profile|
       sleep 1
-      session.visit("http://www.okcupid.com/profile/#{username}?cf=profile")
+      session.visit("http://www.okcupid.com/profile/#{unmessaged_profile.username}?cf=profile")
       session.click_on("Send a Message")
-      sleep 3
-      #check of existence fo box
-      #If Text box exists complete this function
-        session.fill_in('message_text', :with => "Do you like Capybara's? There my favorite. I work at a zoo. :)")
-        sleep 1
+      sleep 1
+      # Rescue method if name is not there
+      if session.has_selector?('textarea#message_text')
+        session.fill_in('message_text', :with => "Do you like Capybara's? There my favorite. :)")
+        sleep 2
         session.click_button("send_btn")
+      end
+      unmessaged_profile.update(:messaged => 1)
     end
-
-
-    # Method Test that boolean had been check
   end
-
 end
