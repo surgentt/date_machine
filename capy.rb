@@ -35,15 +35,13 @@ class Okcupid
   end
 
   def senders
-    session.visit "http://www.okcupid.com/messages"
-    all_messages = Nokogiri::HTML(session.html)
-    all_messages.css("a.open span.subject").collect { |i| i.text }
+    nokogiri_doc("messages").css("a.open span.subject").collect { |i| i.text }
   end
 
   def message_urls
-    session.visit "http://www.okcupid.com/messages"
-    messages_index = Nokogiri::HTML(session.html)
-    messages_index.css(".thread.message.readMessage a.open").collect { |l| l.attribute('href').value}
+    nokogiri_doc("messages").css(".thread.message.readMessage a.open").collect do |link|
+      link.attribute('href').value
+    end
   end
 
 
