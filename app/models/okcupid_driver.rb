@@ -57,7 +57,6 @@ class OkcupidDriver
   end
 
   def message
-    binding.pry
     self.unmessaged_profiles.each do |unmessaged_profile|
       sleep 1
       session.visit("http://www.okcupid.com/profile/#{unmessaged_profile.username}?cf=profile")
