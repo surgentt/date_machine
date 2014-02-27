@@ -25,6 +25,7 @@ class Okcupid
   def login    
     session.visit "http://www.okcupid.com/home"
     session.fill_in "user", :with => "FlambeToe"
+    sleep 1
     session.fill_in "pass", :with => "12flambetoe34"
     session.within "#login_form" do
       session.click_link "Sign in"
@@ -53,13 +54,13 @@ class Okcupid
     arr_i_or_name = sender_finder(arr_i_or_name) unless arr_i_or_name.is_a? Integer
     session.visit("http://www.okcupid.com/#{message_urls[arr_i_or_name][1..-1]}")
     session.fill_in('message_text', :with => "#{response}")
-    session.click_button("#send") # DEBUG - cannot assign ID of button
+    # binding.pry
+    session.find('a[href="#send"]').click
   end
 
   def sender_finder(sender)
     senders.index(sender)
   end
-
 
   #def inbox # make inbox class
   #   session.visit "http://www.okcupid.com/messages"
@@ -68,20 +69,6 @@ class Okcupid
   #   binding.pry
   # end
 
-
-
-  # def message
-  #   @name_array.each do |username|
-  #     # sleep 1
-  #     session.visit("http://www.okcupid.com/profile/#{username}?cf=profile")
-  #     # session.click_on("Send a Message")
-  #     # sleep 3
-  #     # session.fill_in('message_text', :with => "Do you like Capybara's? There my favorite. I work at a zoo. :)")
-  #     # sleep 1
-  #     # session.click_button("send_btn")
-  #   end
-  # end
-  
 end
 
 session = Capybara::Session.new(:selenium)
@@ -91,9 +78,9 @@ puts "SENDERS: #{profile.senders.size}"
 puts "MESSAGE URLS #{profile.message_urls.size}"
 him = profile.sender_finder("mob_fleet")
 puts "#{profile.senders[him]} wrote #{profile.message_content(him)}"
-profile.message_response(him, "Hiiiii how are you?")
+profile.message_response(him, "You seem interesting....")
 
-binding.pry
+# binding.pry
 
 
 
