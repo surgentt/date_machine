@@ -1,6 +1,6 @@
 class OkcupidDriver
 
-  attr_accessor :profiles, :profile, :unmessaged_profiles, :unmessaged_arr, :unmessaged_profile
+  attr_accessor :profiles, :profile, :unmessaged_profiles
   attr_reader :session
 
   def initialize(session)
@@ -17,7 +17,7 @@ class OkcupidDriver
     session.within "#login_form" do
       session.click_link "Sign in"
     end
-    sleep 3
+    sleep 2
   end
 
   def quickmatch_like_people
@@ -57,12 +57,13 @@ class OkcupidDriver
   end
 
   def message
+    binding.pry
     self.unmessaged_profiles.each do |unmessaged_profile|
       sleep 1
       session.visit("http://www.okcupid.com/profile/#{unmessaged_profile.username}?cf=profile")
       session.click_on("Send a Message")
       sleep 1
-      # Rescue method if name is not there
+      # Rescue type method if message box not there
       if session.has_selector?('textarea#message_text')
         session.fill_in('message_text', :with => "Do you like Capybara's? There my favorite. :)")
         sleep 2

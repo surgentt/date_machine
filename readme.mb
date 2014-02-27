@@ -1,1 +1,9 @@
-##http://www.amberbit.com/blog/2014/2/12/automate-tasks-on-the-web-with-ruby-and-capybara/
+# OkCapy Gem
+
+* This is a bot that utilizes Selenium, Capybara and Nokogiri to automate your online dating profile.
+
+* Please change the app/models/okcupid_driver and then run bin/run to start getting Capybara to automate your love life. 
+
+
+### Resources
+* http://www.amberbit.com/blog/2014/2/12/automate-tasks-on-the-web-with-ruby-and-capybara/
