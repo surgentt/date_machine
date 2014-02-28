@@ -24,3 +24,12 @@ end
 task :console => "db:migrate" do
   Pry.start
 end
+
+
+
+
+
+
+
+
+
