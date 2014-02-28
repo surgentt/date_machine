@@ -1,18 +1,8 @@
 require 'bundler/setup'
 Bundler.require
 
-require 'selenium-webdriver'
-require 'capybara'
-require 'pry'
-require 'nokogiri'
-## Can I remove the active_record
 require "active_record"
-require "sqlite3"
-require "rspec"
-require "pry"
-# What does ostruct do
-require 'ostruct'
-require 'rake'
+require "ostruct"
 
 # This requires all information in the lib and model directory
 Dir[File.join(File.dirname(__FILE__), "../app/models", "*.rb")].each {|f| require f}

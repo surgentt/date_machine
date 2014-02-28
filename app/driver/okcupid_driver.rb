@@ -1,4 +1,4 @@
-class OkcupidDriver
+class LikeDriver
 
   attr_accessor :profiles, :profile, :unmessaged_profiles
   attr_reader :session
