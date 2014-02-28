@@ -6,6 +6,7 @@ require "ostruct"
 
 # This requires all information in the lib and model directory
 Dir[File.join(File.dirname(__FILE__), "../app/models", "*.rb")].each {|f| require f}
+Dir[File.join(File.dirname(__FILE__), "../app/drivers", "*.rb")].each {|f| require f}
 Dir[File.join(File.dirname(__FILE__), "../lib/support", "*.rb")].each {|f| require f}
 
 DBRegistry[ENV["OKCUPID_ENV"]].connect!
