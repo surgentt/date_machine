@@ -41,7 +41,8 @@ class MessageDriver
   end
 
   def message_content(arr_index)
-    nokogiri_doc(message_urls[arr_index][1..-1]).css(".message_body").text
+    all_messages = nokogiri_doc(message_urls[arr_index][1..-1]).css('.to_me .message_body').text
+    all_messages[1..-1].split("  ")
   end
 
   def message_response(arr_i_or_name, response)
