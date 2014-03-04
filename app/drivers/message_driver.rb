@@ -2,7 +2,7 @@
 
 class MessageDriver
 
-  attr_reader :session
+  attr_reader :session, :message_doc
 
   def initialize(session)
     @session = session
@@ -19,11 +19,12 @@ class MessageDriver
   def login(username, password)    
     session.visit "http://www.okcupid.com/home"
     session.fill_in "user", :with => username
-    sleep 1
     session.fill_in "pass", :with => password
+    sleep 1
     session.within "#login_form" do
       session.click_link "Sign in"
     end
+    @message_doc = nokogiri_doc("messages")
   end
 
   def send_message
@@ -31,11 +32,11 @@ class MessageDriver
   end
 
   def senders
-    nokogiri_doc("messages").css("a.open span.subject").collect { |i| i.text }
+    @message_doc.css("a.open span.subject").collect { |i| i.text }
   end
 
   def message_urls
-    nokogiri_doc("messages").css(".thread.message a.open").collect do |link|
+    @message_doc.css(".thread.message a.open").collect do |link|
       link.attribute('href').value
     end
   end
