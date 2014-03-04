@@ -1,3 +1,5 @@
+# NOT IN USE
+
 class UserDriver
 
   attr_reader :session
