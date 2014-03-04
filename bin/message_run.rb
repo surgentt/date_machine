@@ -3,19 +3,28 @@ ENV["OKCUPID_ENV"] = "development"
 require_relative '../config/environment'
 
 session = Capybara::Session.new(:selenium)
-messages = MessageDriver.new(session)
-messages.login("flambetoe", "12flambetoe34")
+inbox = MessageDriver.new(session)
+inbox.login("flambetoe", "12flambetoe34")
 
-puts "SENDERS: #{messages.senders.size}"
-puts "MESSAGE URLS: #{messages.message_urls.size}"
-messages.senders.each
-@message = MessageDriver.new
-@message.senders.each do |sender|
-  @message.save
+puts "SENDERS: #{inbox.senders.size}"
+puts "MESSAGE URLS: #{inbox.message_urls.size}"
+
+inbox.senders.each do |sender|
+  @user = User.create(:username => sender)
+
+  current_sender = inbox.sender_finder(sender)
+  inbox.message_content(current_sender).each do |message_content|
+  Message.create(
+    :message_content => message_content,
+    :sender_id => @user.id
+    )
+  end
 end
 
-# him = messages.sender_finder("mob_fleet")
-# puts "#{messages.senders[him]} wrote #{messages.message_content(him)}"
-# messages.message_response(him, "You don't seem to be very interested.")
+
+
+# him = inbox.sender_finder("mob_fleet")
+# puts "#{inbox.senders[him]} wrote #{inbox.message_content(him)}"
+# inbox.message_response(him, "You don't seem to be very interested.")
 
 # binding.pry
